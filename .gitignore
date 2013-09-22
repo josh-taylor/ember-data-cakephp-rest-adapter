@@ -1,0 +1,7 @@
+syntax: glob
+
+.bundle
+vendor
+dist
+tmp
+*swp
