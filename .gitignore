@@ -1,7 +1,9 @@
-syntax: glob
-
-.bundle
-vendor
 dist
 tmp
 *swp
+
+node_modules
+tests/dist
+tests/lib/tmpl.min.js
+
+.idea/
