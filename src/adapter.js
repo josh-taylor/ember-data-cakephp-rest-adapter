@@ -13,7 +13,6 @@ DS.CakeRESTAdapter = DS.RESTAdapter.extend({
      */
     buildURL: function(type, id) {
         var url = this._super(type, id);
-        console.log('Built: ' + url);
         return url + '.json';
     }
 });
