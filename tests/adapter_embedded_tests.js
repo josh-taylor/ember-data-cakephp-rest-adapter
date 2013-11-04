@@ -1,19 +1,19 @@
-module('embedded integration tests', {
-    setup: function() {
-        ajaxUrl = undefined;
-        ajaxType = undefined;
-        ajaxHash = undefined;
-        Ember.run(function() {
-            App.reset();
-            App.deferReadiness();
-        });
-        stubEndpointForHttpRequest('/api/sessions/', []);
-        Ember.run(App, 'advanceReadiness');
-    },
-    teardown: function() {
-        $.mockjaxClear();
-    }
-});
+//module('embedded integration tests', {
+//    setup: function() {
+//        ajaxUrl = undefined;
+//        ajaxType = undefined;
+//        ajaxHash = undefined;
+//        Ember.run(function() {
+//            App.reset();
+//            App.deferReadiness();
+//        });
+//        stubEndpointForHttpRequest('/api/sessions/', []);
+//        Ember.run(App, 'advanceReadiness');
+//    },
+//    teardown: function() {
+//        $.mockjaxClear();
+//    }
+//});
 
 //test('ajax response with array of embedded records renders hasMany correctly', function() {
 //    var json = [{"id": 1, "hat": "zzz", "speakers": [{"id": 1, "name": "first", "other": 1}], "ratings": [{"id": 1, "score": 10, "feedback": "nice", "other": 1}], "tags": [{"id": 1, "description": "done"}], "location": {"id": 1, "name": "US"}}];
