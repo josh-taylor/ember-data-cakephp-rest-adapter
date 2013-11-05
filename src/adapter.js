@@ -1,3 +1,5 @@
+var get = Ember.get;
+
 DS.CakeRESTAdapter = DS.RESTAdapter.extend({
     defaultSerializer: 'DS/cakeREST',
 
@@ -12,7 +14,25 @@ DS.CakeRESTAdapter = DS.RESTAdapter.extend({
      @returns String
      */
     buildURL: function(type, id) {
-        var url = this._super(type, id);
-        return url + '.json';
+        var url = [],
+            host = get(this, 'host'),
+            prefix = this.urlPrefix();
+
+        if (type) {
+            url.push(this.pathForType(type).underscore());
+        }
+        if (id) {
+            url.push(id);
+        }
+        if (prefix) {
+            url.unshift(prefix);
+        }
+
+        url = url.join('/');
+        if (!host && url) {
+            url = '/' + url;
+        }
+        url = url + '.json';
+        return url;
     }
 });

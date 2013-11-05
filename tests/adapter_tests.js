@@ -5,9 +5,9 @@ module('integration tests', {
         ajaxUrl = undefined;
         ajaxType = undefined;
         ajaxHash = undefined;
-        speakers_json = [{"Speakers": {"id": 9, "name": "first", "session": 1}}, {"Spekaers": {"id": 4, "name": "last", "session": 1}}];
-        ratings_json = [{"Ratings": {"id": 8, "score": 10, "feedback": "nice", "session": 1}}];
-        tags_json = [{"Tags": {"id": 7, "description": "done"}}];
+        speakers_json = [{"Speaker": {"id": 9, "name": "first", "session": 1}}, {"Spekaers": {"id": 4, "name": "last", "session": 1}}];
+        ratings_json = [{"Rating": {"id": 8, "score": 10, "feedback": "nice", "session": 1}}];
+        tags_json = [{"Tag": {"id": 7, "description": "done"}}];
         Ember.run(function() {
             App.reset();
             App.deferReadiness();
@@ -61,7 +61,7 @@ test('keys with underscores converted to camelCase', function() {
     stubEndpointForHttpRequest('/api/sessions.json', []);
     stubEndpointForHttpRequest('/api/camels/1/camel_case_relationship.json', tags_json);
     var json = [{"Camel": {"id": 1, "camel_case_attribute": "foo", "camel_case_relationship": [7]}}];
-    stubEndpointForHttpRequest('/api/camels/', json);
+    stubEndpointForHttpRequest('/api/camels.json', json);
     Ember.run(App, 'advanceReadiness');
     visit("/camels").then(function() {
         var spans = find("span").length;
