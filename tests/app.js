@@ -24,7 +24,7 @@ App.ObjectTransform = DS.Transform.extend({
 App.Preserialized = DS.Model.extend({
   // This will contain JSON that will be deserialized by the App.ObjectTransform.
   // If it deserializes to an array with anything other than numbers it will be 
-  // incorrectly interpreted by extractDjangoPayload as an embedded record.
+  // incorrectly interpreted by extractCakePayload as an embedded record.
   config: DS.attr('object')
 });
 
