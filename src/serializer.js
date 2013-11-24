@@ -29,7 +29,17 @@ DS.CakeRESTSerializer = DS.RESTSerializer.extend({
         }, this);
     },
 
+    removeWrappingCakePayloadKey: function(type, payload, isArray) {
+        var typeKey = type.typeKey.underscore();
+
+        if (isArray) {
+            typeKey = typeKey.pluralize();
+        }
+        return payload[typeKey];
+    },
+
     extractSingle: function(store, type, payload) {
+        payload = this.removeWrappingCakePayloadKey(type, payload, false);
         payload = this.removeCakePayloadKey(type, payload);
         // using normalize from RESTSerializer applies transforms and allows
         // us to define keyForAttribute and keyForRelationship to handle
@@ -41,6 +51,11 @@ DS.CakeRESTSerializer = DS.RESTSerializer.extend({
 
     extractArray: function(store, type, payload) {
         var self = this;
+
+        if (Ember.isNone(payload) || Ember.isEmpty(payload)) {
+            return payload;
+        }
+        payload = this.removeWrappingCakePayloadKey(type, payload, true);
         for (var j = 0; j < payload.length; j++) {
             payload[j] = this.removeCakePayloadKey(type, payload[j]);
             // using normalize from RESTSerializer applies transforms and allows

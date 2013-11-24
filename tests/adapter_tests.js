@@ -33,7 +33,7 @@ test('arrays as result of transform should not be interpreted as embedded record
 
 test('attribute transforms are applied', function() {
     stubEndpointForHttpRequest('/api/sessions.json', []);
-    var json = {"transfromers": [{"Transformer": {"id": 1, "transformed": "blah blah"}}]};
+    var json = {"transformers": [{"Transformer": {"id": 1, "transformed": "blah blah"}}]};
     stubEndpointForHttpRequest('/api/transformers.json', json);
     Ember.run(App, 'advanceReadiness');
     visit("/transformers").then(function() {
