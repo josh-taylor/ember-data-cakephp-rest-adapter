@@ -201,7 +201,7 @@ test('finding nested attributes when some requested records are already loaded m
     Ember.run(App, function(){
         // load the object into the Ember data store
         var store = App.__container__.lookup("store:main");  // pretty sure this is not the right way to do this...
-        store.serializerFor('speaker').pushSinglePayload(store, 'speaker', aliases.aliases[0]['Alias']); // pre-load the first alias object before find
+        store.serializerFor('speaker').pushSinglePayload(store, 'speaker', aliases.aliases[0].Alias); // pre-load the first alias object before find
     });
     stubEndpointForHttpRequest('/api/sessions.json', []);
     stubEndpointForHttpRequest('/api/users/1.json', user);
