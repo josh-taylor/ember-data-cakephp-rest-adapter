@@ -148,7 +148,7 @@ test('ajax response for single session will render correctly', function() {
         //setup the http post mock $.ajax
         //for some reason the 2 lines below are not used or needed?
         var response = {"id": 4, "score": 2, "feedback": "abc", "session": 1};
-        stubEndpointForHttpRequest('/api/sessions/1/ratings/', response, 'POST', 201);
+        stubEndpointForHttpRequest('/api/sessions/1/ratings.json', response, 'POST', 201);
         fillIn(".score", "2");
         fillIn(".feedback", "abc");
         return click(".add_rating");
