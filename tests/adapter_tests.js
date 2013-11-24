@@ -302,7 +302,7 @@ test('ajax post with multiple parents will use singular endpoint', function() {
         //this is currently broken for non-embedded bound templates (should be 3)
         var speakers = find("div .speakers span.name").length;
         equal(speakers, 2, "template had " + speakers + " speakers");
-        expectUrlTypeHashEqual("/api/speakers/", "POST", response);
+        expectUrlTypeHashEqual("/api/speakers.json", "POST", response);
         expectSpeakerAddedToStore(3, 'tom', 'iowa');
     });
 });
