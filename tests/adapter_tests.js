@@ -162,7 +162,7 @@ test('ajax response for single session will render correctly', function() {
 });
 
 test('test pushSinglePayload', function() {
-    var json = {"id": 10, "description": "django"};
+    var json = {"tag": {"Tag": {"id": 10, "description": "cakephp"}}};
     stubEndpointForHttpRequest('/api/sessions.json', []);
     Ember.run(App, function(){
         // load the object into the Ember data store
@@ -172,12 +172,12 @@ test('test pushSinglePayload', function() {
     Ember.run(App, 'advanceReadiness');
     visit("/tag/10").then(function() {
         var content = $("span").text().trim();
-        equal(content, "django", "name was instead: " + content);
+        equal(content, "cakephp", "name was instead: " + content);
     });
 });
 
 test('test pushArrayPayload', function() {
-    var json = [{"id": 11, "description": "ember"}, {"id": 12, "description": "tomster"}];
+    var json = {"tags": [{"Tag": {"id": 11, "description": "ember"}}, {"Tag": {"id": 12, "description": "tomster"}}]};
     stubEndpointForHttpRequest('/api/sessions.json', []);
     Ember.run(App, function(){
         // load the objects into the Ember data store
@@ -198,10 +198,11 @@ test('test pushArrayPayload', function() {
 test('finding nested attributes when some requested records are already loaded makes GET request to the correct attribute-based URL', function() {
     var user = {"user": {"User": {"id": 1, "username": "foo", "aliases": [8, 9]}}};
     var aliases = {"aliases": [{"Alias": {"id": 8, "name": "ember"}}, {"Alias": {"id": 9, "name": "tomster"}}]};
+    var alias = {"alias": aliases.aliases[0]};
     Ember.run(App, function(){
         // load the object into the Ember data store
         var store = App.__container__.lookup("store:main");  // pretty sure this is not the right way to do this...
-        store.serializerFor('speaker').pushSinglePayload(store, 'speaker', aliases.aliases[0].Alias); // pre-load the first alias object before find
+        store.serializerFor('speaker').pushSinglePayload(store, 'speaker', alias); // pre-load the first alias object before find
     });
     stubEndpointForHttpRequest('/api/sessions.json', []);
     stubEndpointForHttpRequest('/api/users/1.json', user);
