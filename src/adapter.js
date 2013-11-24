@@ -38,8 +38,10 @@ DS.CakeRESTAdapter = DS.RESTAdapter.extend({
         hash = hash || {};
         hash.cache = false;
 
-        url = url.substr(0, url.length - 1);
-        url = url + '.json';
+        if (url.indexOf('.json', url.length - 5) === -1) {
+            url = url.substr(0, url.length - 1);
+            url = url + '.json';
+        }
 
         return this._super(url, type, hash);
     },
@@ -99,6 +101,8 @@ DS.CakeRESTAdapter = DS.RESTAdapter.extend({
             var endpoint = url.split('/').reverse()[1];
             url = url.replace(endpoint, parent_plural + "/" + parent_pk + "/" + endpoint);
         }
+
+        url = url.substr(0, url.length - 1) + '.json';
         return url;
     },
 
@@ -109,7 +113,9 @@ DS.CakeRESTAdapter = DS.RESTAdapter.extend({
         root = parent.constructor.typeKey;
         url = this.buildURL(root, parentValue);
 
-        return url + endpoint + '/';
+        url = url + endpoint + '/';
+        url = url.substr(0, url.length - 1) + '.json';
+        return url;
     },
 
     /**
