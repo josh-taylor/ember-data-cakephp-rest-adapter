@@ -34,26 +34,8 @@ DS.CakeRESTAdapter = DS.RESTAdapter.extend({
         return this.ajax(url, "GET");
     },
 
-    ajax: function(url, type, hash) {
-        hash = hash || {};
-        hash.cache = false;
-
-        if (url.indexOf('.json', url.length - 5) === -1) {
-            url = url.substr(0, url.length - 1);
-            url = url + '.json';
-        }
-
-        return this._super(url, type, hash);
-    },
-
     buildURL: function(type, id) {
-        var url = this._super(type, id);
-
-        if (url.charAt(url.length -1) !== '/') {
-            url += '/';
-        }
-
-        return url;
+        return this._super(type, id) + '.json';
     },
 
     getBelongsTo: function(record) {
@@ -99,10 +81,9 @@ DS.CakeRESTAdapter = DS.RESTAdapter.extend({
             var parent_pk = record.get(parent_type).get('id'); //todo find pk (not always id)
             var parent_plural = Ember.String.pluralize(parent_type);
             var endpoint = url.split('/').reverse()[1];
-            url = url.replace(endpoint, parent_plural + "/" + parent_pk + "/" + endpoint);
+            url = url.replace(endpoint, endpoint + '/' + parent_plural + "/" + parent_pk);
         }
 
-        url = url.substr(0, url.length - 1) + '.json';
         return url;
     },
 
@@ -112,10 +93,8 @@ DS.CakeRESTAdapter = DS.RESTAdapter.extend({
         parentValue = parent.get('id'); //todo find pk (not always id)
         root = parent.constructor.typeKey;
         url = this.buildURL(root, parentValue);
-
-        url = url + endpoint + '/';
-        url = url.substr(0, url.length - 1) + '.json';
-        return url;
+        url = url.substr(0, url.length - 5);
+        return url + '/' + endpoint + '.json';
     },
 
     /**
