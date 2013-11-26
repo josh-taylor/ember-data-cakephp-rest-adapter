@@ -197,8 +197,8 @@ test('test pushArrayPayload', function() {
 
 test('finding nested attributes when some requested records are already loaded makes GET request to the correct attribute-based URL', function() {
     var user = {"user": {"User": {"id": 1, "username": "foo", "aliases": [8, 9]}}};
-    var aliases = {"aliases": [{"Alias": {"id": 8, "name": "ember"}}, {"Alias": {"id": 9, "name": "tomster"}}]};
-    var alias = {"alias": aliases.aliases[0]};
+    var aliases = {"speakers": [{"Speaker": {"id": 8, "name": "ember"}}, {"Speaker": {"id": 9, "name": "tomster"}}]};
+    var alias = {"speaker": aliases.speakers[0]};
     Ember.run(App, function(){
         // load the object into the Ember data store
         var store = App.__container__.lookup("store:main");  // pretty sure this is not the right way to do this...
@@ -220,7 +220,7 @@ test('finding nested attributes when some requested records are already loaded m
 
 test('finding nested attributes makes GET request to the correct attribute-based URL', function() {
     var user = {"user": {"User": {"id": 1, "username": "foo", "aliases": [8, 9]}}};
-    var aliases = {"aliases": [{"Alias": {"id": 8, "name": "ember"}}, {"Alias": {"id": 9, "name": "tomster"}}]};
+    var aliases = {"speakers": [{"Speaker": {"id": 8, "name": "ember"}}, {"Speaker": {"id": 9, "name": "tomster"}}]};
     stubEndpointForHttpRequest('/api/sessions.json', []);
     stubEndpointForHttpRequest('/api/users/1.json', user);
     stubEndpointForHttpRequest('/api/users/1/aliases.json', aliases);
@@ -285,7 +285,7 @@ test('ajax post with multiple parents will use singular endpoint', function() {
     stubEndpointForHttpRequest('/api/sessions/1/ratings.json', ratings_json);
     stubEndpointForHttpRequest('/api/sessions/1/tags.json', tags_json);
     var json = {"Session": {"id": 1, "name": "foo", "room": "bar", "desc": "test", "speakers": [9,4], "ratings": [8], "tags": [7]}};
-    var response = {"Speaker": {"id": 3, "name": "tom", "location": "iowa", "session": 1, "association": null, "personas": [], "zidentity": 1}};
+    var response = {"speaker": {"Speaker": {"id": 3, "name": "tom", "location": "iowa", "session": 1, "association": null, "personas": [], "zidentity": 1}}};
     stubEndpointForHttpRequest('/api/sessions.json', {"sessions": [json]});
     stubEndpointForHttpRequest('/api/sessions/1.json', {"session": json});
     Ember.run(App, 'advanceReadiness');
@@ -293,7 +293,7 @@ test('ajax post with multiple parents will use singular endpoint', function() {
         var speakers = find("div .speakers span.name").length;
         equal(speakers, 2, "template had " + speakers + " speakers");
         //setup the http post mock $.ajax
-        var user = {"User": {"id": 1, "username": "toranb", "aliases": [1]}};
+        var user = {"user": {"User": {"id": 1, "username": "toranb", "aliases": [1]}}};
         stubEndpointForHttpRequest('/api/users/1.json', user);
         stubEndpointForHttpRequest('/api/speakers.json', response, 'POST', 201);
         fillIn(".speaker_name", "tom");
@@ -339,7 +339,7 @@ test('ajax post with different single parent will use correctly nested endpoint'
     stubEndpointForHttpRequest('/api/sessions/1/ratings.json', ratings_json);
     stubEndpointForHttpRequest('/api/sessions/1/tags.json', tags_json);
     var json = {"Session": {"id": 1, "name": "foo", "room": "bar", "desc": "test", "speakers": [9,4], "ratings": [8], "tags": [7]}};
-    var response = {"Speaker": {"id": 3, "name": "who", "location": "dat", "session": null, "association": null, "personas": [], "zidentity": 1}};
+    var response = {"speaker": {"Speaker": {"id": 3, "name": "who", "location": "dat", "session": null, "association": null, "personas": [], "zidentity": 1}}};
     stubEndpointForHttpRequest('/api/sessions.json', {"sessions": [json]});
     stubEndpointForHttpRequest('/api/sessions/1.json', {"session": json});
     Ember.run(App, 'advanceReadiness');
@@ -347,7 +347,7 @@ test('ajax post with different single parent will use correctly nested endpoint'
         var speakers = find("div .speakers span.name").length;
         equal(speakers, 2, "template had " + speakers + " speakers");
         //setup the http post mock $.ajax
-        var user = {"Users": {"id": 1, "username": "toranb", "aliases": [1]}};
+        var user = {"user": {"User": {"id": 1, "username": "toranb", "aliases": [1]}}};
         stubEndpointForHttpRequest('/api/users/1.json', user);
         stubEndpointForHttpRequest('/api/zidentities/1/speakers.json', response, 'POST', 201);
         fillIn(".speaker_name", "who");
