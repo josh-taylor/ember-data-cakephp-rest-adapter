@@ -5,8 +5,8 @@ module('integration tests', {
         ajaxUrl = undefined;
         ajaxType = undefined;
         ajaxHash = undefined;
-        speakers_json = {"speakers": [{"Speaker": {"id": 9, "name": "first", "session": 1}}, {"Speaker": {"id": 4, "name": "last", "session": 1}}]};
-        ratings_json = {"ratings": [{"Rating": {"id": 8, "score": 10, "feedback": "nice", "session": 1}}]};
+        speakers_json = {"speakers": [{"Speaker": {"id": 9, "name": "first", "session_id": 1}}, {"Speaker": {"id": 4, "name": "last", "session_id": 1}}]};
+        ratings_json = {"ratings": [{"Rating": {"id": 8, "score": 10, "feedback": "nice", "session_id": 1}}]};
         tags_json = {"tags": [{"Tag": {"id": 7, "description": "done"}}]};
         Ember.run(function() {
             App.reset();
@@ -236,8 +236,8 @@ test('finding nested attributes makes GET request to the correct attribute-based
 });
 
 test('basic error handling will bubble to the model', function() {
-    var speaker = {"speaker": {"Speaker": {"id": 1, "name": "wat", "location": "iowa", "session": 1, "association": 1, "personas": [1], "zidentity": 1}}};
-    var personas = {"personas": [{"Persona": {"id": 1, "nickname": "magic", "speaker": 1, "company": 1}}]};
+    var speaker = {"speaker": {"Speaker": {"id": 1, "name": "wat", "location": "iowa", "session_id": 1, "association_id": 1, "personas": [1], "zidentity": 1}}};
+    var personas = {"personas": [{"Persona": {"id": 1, "nickname": "magic", "speaker_id": 1, "company_id": 1}}]};
     stubEndpointForHttpRequest('/api/sessions.json', []);
     stubEndpointForHttpRequest('/api/speakers/1.json', speaker);
     stubEndpointForHttpRequest('/api/speakers/1/personas.json', personas);
@@ -258,8 +258,8 @@ test('basic error handling will bubble to the model', function() {
 });
 
 test('basic error handling will not fire when update is successful', function() {
-    var speaker = {"speaker": {"Speaker": {"id": 1, "name": "wat", "location": "iowa", "session": 1, "association": 1, "personas": [1], "zidentity": 1}}};
-    var personas = {"personas": [{"Persona": {"id": 1, "nickname": "magic", "speaker": 1, "company": 1}}]};
+    var speaker = {"speaker": {"Speaker": {"id": 1, "name": "wat", "location": "iowa", "session_id": 1, "association_id": 1, "personas": [1], "zidentity": 1}}};
+    var personas = {"personas": [{"Persona": {"id": 1, "nickname": "magic", "speaker_id": 1, "company_id": 1}}]};
     stubEndpointForHttpRequest('/api/sessions.json', []);
     stubEndpointForHttpRequest('/api/speakers/1.json', speaker);
     stubEndpointForHttpRequest('/api/speakers/1/personas.json', personas);
@@ -285,7 +285,7 @@ test('ajax post with multiple parents will use singular endpoint', function() {
     stubEndpointForHttpRequest('/api/sessions/1/ratings.json', ratings_json);
     stubEndpointForHttpRequest('/api/sessions/1/tags.json', tags_json);
     var json = {"Session": {"id": 1, "name": "foo", "room": "bar", "desc": "test", "speakers": [9,4], "ratings": [8], "tags": [7]}};
-    var response = {"speaker": {"Speaker": {"id": 3, "name": "tom", "location": "iowa", "session": 1, "association": null, "personas": [], "zidentity": 1}}};
+    var response = {"speaker": {"Speaker": {"id": 3, "name": "tom", "location": "iowa", "session_id": 1, "association_id": null, "personas": [], "zidentity": 1}}};
     stubEndpointForHttpRequest('/api/sessions.json', {"sessions": [json]});
     stubEndpointForHttpRequest('/api/sessions/1.json', {"session": json});
     Ember.run(App, 'advanceReadiness');
@@ -313,7 +313,7 @@ test('ajax post with single parent will use correctly nested endpoint', function
     stubEndpointForHttpRequest('/api/sessions/1/ratings.json', ratings_json);
     stubEndpointForHttpRequest('/api/sessions/1/tags.json', tags_json);
     var json = {"Session": {"id": 1, "name": "foo", "room": "bar", "desc": "test", "speakers": [9,4], "ratings": [8], "tags": [7]}};
-    var response = {"Speaker": {"id": 3, "name": "axe", "location": "yo", "session": 1, "association": null, "personas": [], "zidentity": null}};
+    var response = {"Speaker": {"id": 3, "name": "axe", "location": "yo", "session_id": 1, "association_id": null, "personas": [], "zidentity": null}};
     stubEndpointForHttpRequest('/api/sessions.json', {"sessions": [json]});
     stubEndpointForHttpRequest('/api/sessions/1.json', {"session": json});
     Ember.run(App, 'advanceReadiness');
@@ -339,7 +339,7 @@ test('ajax post with different single parent will use correctly nested endpoint'
     stubEndpointForHttpRequest('/api/sessions/1/ratings.json', ratings_json);
     stubEndpointForHttpRequest('/api/sessions/1/tags.json', tags_json);
     var json = {"Session": {"id": 1, "name": "foo", "room": "bar", "desc": "test", "speakers": [9,4], "ratings": [8], "tags": [7]}};
-    var response = {"speaker": {"Speaker": {"id": 3, "name": "who", "location": "dat", "session": null, "association": null, "personas": [], "zidentity": 1}}};
+    var response = {"speaker": {"Speaker": {"id": 3, "name": "who", "location": "dat", "session_id": null, "association_id": null, "personas": [], "zidentity": 1}}};
     stubEndpointForHttpRequest('/api/sessions.json', {"sessions": [json]});
     stubEndpointForHttpRequest('/api/sessions/1.json', {"session": json});
     Ember.run(App, 'advanceReadiness');
